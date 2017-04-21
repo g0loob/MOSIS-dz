@@ -17,6 +17,7 @@ import { DetailsPage } from '../details/details';
 })
 export class HomePage {
   map: GoogleMap;
+  loggedIn: boolean = false;
 
   constructor(public navCtrl: NavController, private googleMaps: GoogleMaps) {
 
@@ -73,7 +74,7 @@ export class HomePage {
   addMarkerOnMap(markerOptions: MarkerOptions) {
     this.map.addMarker(markerOptions)
       .then((marker: Marker) => {
-        marker.showInfoWindow();
+        // marker.showInfoWindow();
         //this.addEventListenerForMarker(marker, markerOptions);
       });
   }
