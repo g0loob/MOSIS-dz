@@ -9,6 +9,7 @@ import {
   MarkerOptions,
   Marker
 } from '@ionic-native/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
 import { DetailsPage } from '../details/details';
 
 @Component({
@@ -19,7 +20,7 @@ export class HomePage {
   map: GoogleMap;
   loggedIn: boolean = false;
 
-  constructor(public navCtrl: NavController, private googleMaps: GoogleMaps) {
+  constructor(public navCtrl: NavController, private googleMaps: GoogleMaps, private geolocation: Geolocation) {
 
   }
   // Load map only after view is initialized
@@ -88,5 +89,15 @@ export class HomePage {
     this.navCtrl.push(DetailsPage, {
       'markerOptions': data
     })
+  }
+
+  locateMe() {
+    this.geolocation.getCurrentPosition().then((position) => {
+      // position.coords.latitude
+      // position.coords.longitude
+      alert('hi')
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
   }
 }

@@ -5,6 +5,9 @@
       <button ion-button icon-only>
         <ion-icon name="search"></ion-icon>
       </button>
+      <button ion-button icon-only (click)="locateMe()">
+        <ion-icon name="locate"></ion-icon>
+      </button>
       <button ion-button icon-only>
         <ion-icon name="{{loggedIn ? 'log-out' : 'log-in'}}"></ion-icon>
       </button>
