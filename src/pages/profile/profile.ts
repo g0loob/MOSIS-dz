@@ -30,7 +30,7 @@ export class ProfilePage {
       .then((res: FacebookLoginResponse) => {
         console.log('Logged into Facebook!', res);
         this.loggedIn = true;
-        
+
         this.fb.api('/' + res.authResponse.userID + '?fields = id,name,email', []).then((data) => {
           //Get the user data
           this.userProfile = {
@@ -40,11 +40,15 @@ export class ProfilePage {
             email: data.email
           }
           //Get the user profile picture and save in user object
-          this.fb.api('/' + res.authResponse.userID + '/picture?redirect=false', []).then((data) => {
-            alert(data.url)
-            this.userProfile['profile_photo'] = data.url;
+          this.fb.api('/' + res.authResponse.userID + '/picture?height=150&width=150&redirect=false', []).then((data) => {
+            this.userProfile['profile_photo'] = data.data.url;
+            //Get the user friends (using app)
+            this.fb.api('/' + res.authResponse.userID + '/friends', []).then((data) => {
+              this.userProfile['friends'] = data.data;
+            });
           });
-        })
+
+        });
       })
       .catch(e => console.log('Error logging into Facebook', e));
   }

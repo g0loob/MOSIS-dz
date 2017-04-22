@@ -16,9 +16,8 @@
 <ion-content padding>
   <button ion-button (click)="fbLogin()">{{ loggedIn ? 'Logout' : 'Login with Facebook' }}</button>
   <div *ngIf="loggedIn">
-    <p>Name: {{ userProfile?.name }}</p>
-    <p>Email: {{ userProfile?.email }}</p>
-    <p>ID: {{ userProfile?.id }}</p>
     <img src="{{ userProfile?.profile_photo }}">
+    <h3>{{ userProfile?.name }}</h3>
+    <!-- <h4>Friends</h4> -->
   </div>
 </ion-content>
