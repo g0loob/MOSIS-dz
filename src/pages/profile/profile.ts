@@ -45,6 +45,7 @@ export class ProfilePage {
             //Get the user friends (using app)
             this.fb.api('/' + res.authResponse.userID + '/friends', []).then((data) => {
               this.userProfile['friends'] = data.data;
+              this.getPictures();
             });
           });
 
@@ -57,5 +58,16 @@ export class ProfilePage {
     this.fb.logout();
     this.loggedIn = false;
   }
+
+  getPictures() {
+    for (let friend of this.userProfile.friends) {
+      this.fb.api('/' + friend.id + '/picture?redirect=false', [])
+        .then((data) => {
+          friend['profile_photo'] = data.data.url;
+        });
+    }
+  }
+
+  callOnMe() { alert('party')}
 
 }
