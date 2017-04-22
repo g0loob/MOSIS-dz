@@ -1,0 +1,24 @@
+<!--
+  Generated template for the Profile page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <button ion-button (click)="fbLogin()">{{ loggedIn ? 'Logout' : 'Login with Facebook' }}</button>
+  <div *ngIf="loggedIn">
+    <p>Name: {{ userProfile?.name }}</p>
+    <p>Email: {{ userProfile?.email }}</p>
+    <p>ID: {{ userProfile?.id }}</p>
+    <img src="{{ userProfile?.profile_photo }}">
+  </div>
+</ion-content>

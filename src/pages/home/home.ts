@@ -11,6 +11,7 @@ import {
 } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { DetailsPage } from '../details/details';
+import { ProfilePage } from '../profile/profile';
 
 @Component({
   selector: 'page-home',
@@ -18,7 +19,6 @@ import { DetailsPage } from '../details/details';
 })
 export class HomePage {
   map: GoogleMap;
-  loggedIn: boolean = false;
 
   constructor(public navCtrl: NavController, private googleMaps: GoogleMaps, private geolocation: Geolocation) {
 
@@ -99,5 +99,9 @@ export class HomePage {
     }).catch((error) => {
       console.log('Error getting location', error);
     });
+  }
+
+  profile() {
+    this.navCtrl.push(ProfilePage);
   }
 }
