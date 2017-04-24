@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Facebook } from '@ionic-native/facebook';
-import { Geolocation } from '@ionic-native/geolocation';
+import { GeolocationService } from "../providers/geolocation-service";
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -36,7 +36,7 @@ import { ProfilePage } from '../pages/profile/profile';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GoogleMaps,
     Facebook,
-    Geolocation
+    GeolocationService
   ]
 })
 export class AppModule {}

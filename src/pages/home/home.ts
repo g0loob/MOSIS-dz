@@ -9,9 +9,9 @@ import {
   MarkerOptions,
   Marker
 } from '@ionic-native/google-maps';
-import { Geolocation } from '@ionic-native/geolocation';
 import { DetailsPage } from '../details/details';
 import { ProfilePage } from '../profile/profile';
+import { GeolocationService } from "../../providers/geolocation-service";
 
 @Component({
   selector: 'page-home',
@@ -19,8 +19,10 @@ import { ProfilePage } from '../profile/profile';
 })
 export class HomePage {
   map: GoogleMap;
+  myLastLocation: LatLng;
+  markers: MarkerOptions[] = [];
 
-  constructor(public navCtrl: NavController, private googleMaps: GoogleMaps, private geolocation: Geolocation) {
+  constructor(public navCtrl: NavController, private googleMaps: GoogleMaps, private geolocationService: GeolocationService) {
 
   }
   // Load map only after view is initialized
@@ -68,6 +70,9 @@ export class HomePage {
     };
     markerOptions2.infoClick = () => { this.showDetails(markerOptions2); }
 
+    this.markers.push(markerOptions);
+    this.markers.push(markerOptions2);
+
     this.addMarkerOnMap(markerOptions);
     this.addMarkerOnMap(markerOptions2);
   }
@@ -92,13 +97,34 @@ export class HomePage {
   }
 
   locateMe() {
-    this.geolocation.getCurrentPosition().then((position) => {
+    this.geolocationService.getCurrentPosition().then((position) => {
       // position.coords.latitude
       // position.coords.longitude
-      alert('hi')
+      this.removeMyLastLocationMarker();
+      this.myLastLocation = new LatLng(position.coords.latitude, position.coords.longitude);
+      let cameraPosition: AnimateCameraOptions = {
+        target: this.myLastLocation,
+        zoom: 17,
+        duration: 2000
+      };
+      let markerOptions: MarkerOptions = {
+        position: this.myLastLocation,
+        // icon: 'https://www.easylocator.net/images/markers/blue_dot_circle_v2.png'// NJAMB'https://cdn0.iconfinder.com/data/icons/user-icons-4/100/user-17-256.png'
+        icon: 'http://blog.ionic.io/wp-content/uploads/2015/05/cropped-logo-32x32.png'
+      };
+      this.addMarkerOnMap(markerOptions);
+      this.map.animateCamera(cameraPosition);
     }).catch((error) => {
+      alert(error);
       console.log('Error getting location', error);
     });
+  }
+
+  removeMyLastLocationMarker() {
+    this.map.clear();
+    for (let marker of this.markers) {
+      this.addMarkerOnMap(marker);
+    }
   }
 
   profile() {
