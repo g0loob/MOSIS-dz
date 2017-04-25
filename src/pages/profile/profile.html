@@ -19,21 +19,33 @@
 
 
 <ion-content padding>
-  <button ion-button icon-left color="#3b5998" style="text-transform: none" (click)="fbLogin()">
-    <ion-icon ios="logo-facebook" md="logo-facebook"></ion-icon>
-    {{ loggedIn ? 'Logout' : 'Log in with Facebook' }}
-  </button>
-  <div *ngIf="loggedIn">
-    <img src="{{ userProfile?.profile_photo }}">
-    <h3>{{ userProfile?.name }}</h3>
-    <h4>Friends</h4>
-    <ion-list>
-      <ion-item *ngFor="let friend of userProfile.friends" (click)="callOnMe()">
-        <ion-avatar item-left>
-          <img src="{{ friend.profile_photo }}">
-        </ion-avatar>
-        <h2>{{ friend.name }}</h2>
-      </ion-item>
-    </ion-list>
-  </div>
+  <ion-grid>
+    <ion-row align-items-center>
+      <ion-col>
+        <button ion-button full icon-left color="#3b5998" style="text-transform: none" (click)="fbLogin()">
+          <ion-icon ios="logo-facebook" md="logo-facebook"></ion-icon>
+          {{ loggedIn ? 'Log out' : 'Log in with Facebook' }}
+        </button>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center *ngIf="loggedIn">
+      <ion-col text-center>
+          <img src="{{ userProfile?.profile_photo }}">
+          <h3>{{ userProfile?.name }}</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center *ngIf="loggedIn">
+      <ion-col>
+          <h4>Friends:</h4>
+          <ion-list>
+            <ion-item *ngFor="let friend of userProfile.friends" (click)="callOnMe()">
+              <ion-avatar item-left>
+                <img src="{{ friend.profile_photo }}">
+              </ion-avatar>
+              <h2>{{ friend.name }}</h2>
+            </ion-item>
+          </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
