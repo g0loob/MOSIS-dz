@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import {NavController, NavParams, PopoverController} from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import {PopoverPage} from "../popover/popover";
 
 /**
  * Generated class for the Profile page.
@@ -16,7 +17,10 @@ export class ProfilePage {
   loggedIn: boolean = false;
   userProfile: any = {};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private fb: Facebook) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public popoverCtrl: PopoverController,
+              private fb: Facebook) {
   }
 
   ionViewDidLoad() {
@@ -69,5 +73,12 @@ export class ProfilePage {
   }
 
   callOnMe() { alert('party')}
+
+  more(myEvent) {
+    let popover = this.popoverCtrl.create(PopoverPage);
+    popover.present({
+      ev: myEvent
+    });
+  }
 
 }
