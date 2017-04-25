@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavController, PopoverController, ViewController} from 'ionic-angular';
+import { NavController, PopoverController } from 'ionic-angular';
 import {
   GoogleMaps,
   GoogleMap,
@@ -12,7 +12,7 @@ import {
 import { DetailsPage } from '../details/details';
 import { ProfilePage } from '../profile/profile';
 import { GeolocationService } from "../../providers/geolocation-service";
-import { AboutPage } from "../about/about";
+import { PopoverPage } from "../popover/popover";
 
 @Component({
   selector: 'page-home',
@@ -143,22 +143,3 @@ export class HomePage {
   }
 }
 
-@Component({
-  template: `
-    <ion-list>
-      <button ion-item (click)="about()">About</button>
-    </ion-list>
-  `
-})
-export class PopoverPage {
-  constructor(public viewCtrl: ViewController,
-              public navCtrl: NavController) {}
-
-  close() {
-    this.viewCtrl.dismiss();
-  }
-
-  about() {
-    this.navCtrl.push(AboutPage);
-  }
-}
