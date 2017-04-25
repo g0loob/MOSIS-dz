@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {NavController, PopoverController, ViewController} from 'ionic-angular';
 import {
   GoogleMaps,
   GoogleMap,
@@ -12,6 +12,7 @@ import {
 import { DetailsPage } from '../details/details';
 import { ProfilePage } from '../profile/profile';
 import { GeolocationService } from "../../providers/geolocation-service";
+import { AboutPage } from "../about/about";
 
 @Component({
   selector: 'page-home',
@@ -22,7 +23,10 @@ export class HomePage {
   myLastLocation: LatLng;
   markers: MarkerOptions[] = [];
 
-  constructor(public navCtrl: NavController, private googleMaps: GoogleMaps, private geolocationService: GeolocationService) {
+  constructor(public navCtrl: NavController,
+              private googleMaps: GoogleMaps,
+              private geolocationService: GeolocationService,
+              public popoverCtrl: PopoverController) {
 
   }
   // Load map only after view is initialized
@@ -129,5 +133,32 @@ export class HomePage {
 
   profile() {
     this.navCtrl.push(ProfilePage);
+  }
+
+  more(myEvent) {
+    let popover = this.popoverCtrl.create(PopoverPage);
+    popover.present({
+      ev: myEvent
+    });
+  }
+}
+
+@Component({
+  template: `
+    <ion-list>
+      <button ion-item (click)="about()">About</button>
+    </ion-list>
+  `
+})
+export class PopoverPage {
+  constructor(public viewCtrl: ViewController,
+              public navCtrl: NavController) {}
+
+  close() {
+    this.viewCtrl.dismiss();
+  }
+
+  about() {
+    this.navCtrl.push(AboutPage);
   }
 }

@@ -8,16 +8,19 @@ import { Facebook } from '@ionic-native/facebook';
 import { GeolocationService } from "../providers/geolocation-service";
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { HomePage, PopoverPage } from '../pages/home/home';
 import { DetailsPage } from '../pages/details/details';
 import { ProfilePage } from '../pages/profile/profile';
+import { AboutPage } from "../pages/about/about";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     DetailsPage,
-    ProfilePage
+    ProfilePage,
+    PopoverPage,
+    AboutPage
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,9 @@ import { ProfilePage } from '../pages/profile/profile';
     MyApp,
     HomePage,
     DetailsPage,
-    ProfilePage
+    ProfilePage,
+    PopoverPage,
+    AboutPage
   ],
   providers: [
     StatusBar,

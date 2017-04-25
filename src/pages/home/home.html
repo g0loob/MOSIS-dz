@@ -1,20 +1,24 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>MOSIS</ion-title>
     <ion-buttons end>
       <button ion-button icon-only>
         <ion-icon name="search"></ion-icon>
       </button>
-      <button ion-button icon-only (click)="locateMe()">
-        <ion-icon name="locate"></ion-icon>
-      </button>
       <button ion-button icon-only (click)="profile()">
         <ion-icon name="person"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="more($event)">
+        <ion-icon name="more"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div #map id="map" style="height:100%;"></div>
+  <div #map id="map" style="height:100%;">
+    <ion-fab right bottom>
+      <button ion-fab color="secondary" (click)="locateMe()"><ion-icon name="locate"></ion-icon></button>
+    </ion-fab>
+  </div>
 </ion-content>

@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Profile</ion-title>
   </ion-navbar>
 
@@ -14,7 +14,10 @@
 
 
 <ion-content padding>
-  <button ion-button (click)="fbLogin()">{{ loggedIn ? 'Logout' : 'Login with Facebook' }}</button>
+  <button ion-button icon-left color="#3b5998" style="text-transform: none" (click)="fbLogin()">
+    <ion-icon ios="logo-facebook" md="logo-facebook"></ion-icon>
+    {{ loggedIn ? 'Logout' : 'Log in with Facebook' }}
+  </button>
   <div *ngIf="loggedIn">
     <img src="{{ userProfile?.profile_photo }}">
     <h3>{{ userProfile?.name }}</h3>

@@ -38,7 +38,7 @@ export class ProfilePage {
             name: data.name,
             id: data.id,
             email: data.email
-          }
+          };
           //Get the user profile picture and save in user object
           this.fb.api('/' + res.authResponse.userID + '/picture?height=150&width=150&redirect=false', []).then((data) => {
             this.userProfile['profile_photo'] = data.data.url;
