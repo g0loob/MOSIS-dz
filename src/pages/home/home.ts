@@ -13,6 +13,7 @@ import { DetailsPage } from '../details/details';
 import { ProfilePage } from '../profile/profile';
 import { GeolocationService } from "../../providers/geolocation-service";
 import { PopoverPage } from "../popover/popover";
+import {AddPlacePage} from "../addplace/addplace";
 
 @Component({
   selector: 'page-home',
@@ -140,6 +141,14 @@ export class HomePage {
     popover.present({
       ev: myEvent
     });
+  }
+
+  enablePin() {
+    this.map.one(GoogleMapsEvent.MAP_CLICK)
+      .then((position) => {
+        this.navCtrl.push(AddPlacePage, {'position': position.toString()});
+      })
+      .catch((e) => alert('error map click: ' + e))
   }
 }
 
