@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 /**
  * Generated class for the Addplace page.
@@ -12,9 +13,16 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'addplace.html',
 })
 export class AddPlacePage {
-  place: any;
+  place: any = {
+    name: '',
+    image: '',
+    lat: '',
+    lng: ''
+  };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private camera: Camera) {
   }
 
   ionViewDidLoad() {
@@ -28,4 +36,15 @@ export class AddPlacePage {
     this.place['image'] = '';
   }
 
+  takePicture() {
+
+  }
+
+  addPlace() {
+
+  }
+
+  cancel() {
+    this.navCtrl.pop();
+  }
 }

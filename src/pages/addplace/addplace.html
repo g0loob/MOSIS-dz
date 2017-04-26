@@ -13,31 +13,27 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
   <ion-grid>
     <ion-row>
       <ion-col>
         <ion-item>
           <ion-label floating>Place name</ion-label>
-          <ion-input type="text"></ion-input>
+          <ion-input [(ngModel)]="place.name"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-item>
-            <ion-label floating>Latitude</ion-label>
-            <ion-input type="number"></ion-input>
-          </ion-item>
+          <ion-label floating>Latitude</ion-label>
+          <ion-input type="number" [(ngModel)]="place.lat" readonly></ion-input>
         </ion-item>
       </ion-col>
       <ion-col>
         <ion-item>
-          <ion-item>
-            <ion-label floating>Longitude</ion-label>
-            <ion-input type="number"></ion-input>
-          </ion-item>
+          <ion-label floating>Longitude</ion-label>
+          <ion-input type="number" [(ngModel)]="place.lng" readonly></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -53,14 +49,22 @@
         </ion-item>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="place.image != ''">
       <ion-col>
-        <img src="" alt="slika">
+        <img src="{{ place.image }}" alt="image">
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <button ion-button full>Take picture</button>
+        <button ion-button full (click)="takePicture()">Take picture</button>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-end>
+      <ion-col>
+        <ion-buttons end>
+          <button ion-button color="dark" clear (click)="cancel()">Cancel</button>
+          <button ion-button color="secondary" (click)="addPlace()">Add</button>
+        </ion-buttons>
       </ion-col>
     </ion-row>
   </ion-grid>
