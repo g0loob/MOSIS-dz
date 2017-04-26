@@ -37,7 +37,14 @@ export class AddPlacePage {
   }
 
   takePicture() {
+    let options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.PNG,
+    };
 
+    this.camera.getPicture(options)
+      .then(imgUrl => this.place.image = imgUrl);;
   }
 
   addPlace() {
