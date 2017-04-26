@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Facebook } from '@ionic-native/facebook';
 import { GeolocationService } from "../providers/geolocation-service";
+import { Camera } from '@ionic-native/camera';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -45,7 +46,8 @@ import { AddPlacePage } from "../pages/addplace/addplace";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GoogleMaps,
     Facebook,
-    GeolocationService
+    GeolocationService,
+    Camera
   ]
 })
 export class AppModule {}
