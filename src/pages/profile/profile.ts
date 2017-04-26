@@ -17,6 +17,8 @@ export class ProfilePage {
   loggedIn: boolean = false;
   canEdit: boolean = false;
   userProfile: any = {};
+  emailBeforeEdit: string = '';
+  birthdayBeforeEdit: string = '';
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -72,6 +74,18 @@ export class ProfilePage {
           friend['profile_photo'] = data.data.url;
         });
     }
+  }
+
+  edit() {
+    this.canEdit = true;
+    this.emailBeforeEdit = this.userProfile.email;
+    this.birthdayBeforeEdit = this.userProfile.birthday;
+  }
+
+  cancel() {
+    this.canEdit = false;
+    this.userProfile.email = this.emailBeforeEdit;
+    this.userProfile.birthday = this.birthdayBeforeEdit;
   }
 
   callOnMe() { alert('party')}

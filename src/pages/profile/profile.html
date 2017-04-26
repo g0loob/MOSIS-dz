@@ -9,7 +9,7 @@
   <ion-navbar color="primary">
     <ion-title>Profile</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="canEdit = true" *ngIf="loggedIn && !canEdit">
+      <button ion-button icon-only (click)="edit()" *ngIf="loggedIn && !canEdit">
         <ion-icon name="create"></ion-icon>
       </button>
       <button ion-button icon-only (click)="more($event)">
@@ -37,14 +37,11 @@
           <h3>{{ userProfile?.name }}</h3>
       </ion-col>
     </ion-row>
-    <ion-row justify-content-center *ngIf="loggedIn && !canEdit && userProfile.email">
+    <ion-row justify-content-center
+             *ngIf="loggedIn && !canEdit && (userProfile.email || userProfile.birthday)">
       <ion-col>
-        <h6>Email: {{ userProfile?.email }}</h6>
-      </ion-col>
-    </ion-row>
-    <ion-row justify-content-center *ngIf="loggedIn && !canEdit && userProfile.birthday">
-      <ion-col>
-        <h6>Birthday: {{ userProfile?.birthday }}</h6>
+        <h6 *ngIf="userProfile.email">Email: {{ userProfile?.email }}</h6>
+        <h6 *ngIf="userProfile.birthday">Birthday: {{ userProfile?.birthday }}</h6>
       </ion-col>
     </ion-row>
     <ion-row justify-content-center *ngIf="canEdit">
@@ -62,7 +59,7 @@
     <ion-row align-items-end *ngIf="canEdit">
       <ion-col>
         <ion-buttons end>
-          <button ion-button color="dark" clear (click)="canEdit = false">Cancel</button>
+          <button ion-button color="dark" clear (click)="cancel()">Cancel</button>
           <button ion-button color="secondary" (click)="canEdit = false">Update</button>
         </ion-buttons>
       </ion-col>
