@@ -15,6 +15,7 @@ import {PopoverPage} from "../popover/popover";
 })
 export class ProfilePage {
   loggedIn: boolean = false;
+  canEdit: boolean = false;
   userProfile: any = {};
 
   constructor(public navCtrl: NavController,
@@ -41,7 +42,8 @@ export class ProfilePage {
             access_token: res.authResponse.accessToken,
             name: data.name,
             id: data.id,
-            email: data.email
+            email: data.email,
+            birthday: ''
           };
           //Get the user profile picture and save in user object
           this.fb.api('/' + res.authResponse.userID + '/picture?height=150&width=150&redirect=false', []).then((data) => {

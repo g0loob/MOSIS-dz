@@ -9,6 +9,9 @@
   <ion-navbar color="primary">
     <ion-title>Profile</ion-title>
     <ion-buttons end>
+      <button ion-button icon-only (click)="canEdit = true" *ngIf="loggedIn && !canEdit">
+        <ion-icon name="create"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="more($event)">
         <ion-icon name="more"></ion-icon>
       </button>
@@ -22,7 +25,7 @@
   <ion-grid>
     <ion-row align-items-center>
       <ion-col>
-        <button ion-button full icon-left color="#3b5998" style="text-transform: none" (click)="fbLogin()">
+        <button ion-button full icon-left color="#3b5998" style="text-transform: none" (click)="fbLogin()" *ngIf="!canEdit">
           <ion-icon ios="logo-facebook" md="logo-facebook"></ion-icon>
           {{ loggedIn ? 'Log out' : 'Log in with Facebook' }}
         </button>
@@ -34,7 +37,37 @@
           <h3>{{ userProfile?.name }}</h3>
       </ion-col>
     </ion-row>
-    <ion-row justify-content-center *ngIf="loggedIn">
+    <ion-row justify-content-center *ngIf="loggedIn && !canEdit && userProfile.email">
+      <ion-col>
+        <h6>Email: {{ userProfile?.email }}</h6>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center *ngIf="loggedIn && !canEdit && userProfile.birthday">
+      <ion-col>
+        <h6>Birthday: {{ userProfile?.birthday }}</h6>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center *ngIf="canEdit">
+      <ion-col>
+        <ion-item>
+          <ion-label floating>Email</ion-label>
+          <ion-input type="email" [(ngModel)]="userProfile.email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Birthday</ion-label>
+          <ion-input type="date" [(ngModel)]="userProfile.birthday"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-end *ngIf="canEdit">
+      <ion-col>
+        <ion-buttons end>
+          <button ion-button color="dark" clear (click)="canEdit = false">Cancel</button>
+          <button ion-button color="secondary" (click)="canEdit = false">Update</button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center *ngIf="loggedIn && !canEdit">
       <ion-col>
           <h4>Friends:</h4>
           <ion-list>
