@@ -13,6 +13,7 @@ import { DetailsPage } from '../pages/details/details';
 import { ProfilePage } from '../pages/profile/profile';
 import { AboutPage } from "../pages/about/about";
 import { PopoverPage } from "../pages/popover/popover";
+import { AddPlacePage } from "../pages/addplace/addplace";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PopoverPage } from "../pages/popover/popover";
     DetailsPage,
     ProfilePage,
     PopoverPage,
-    AboutPage
+    AboutPage,
+    AddPlacePage
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,8 @@ import { PopoverPage } from "../pages/popover/popover";
     DetailsPage,
     ProfilePage,
     PopoverPage,
-    AboutPage
+    AboutPage,
+    AddPlacePage
   ],
   providers: [
     StatusBar,
