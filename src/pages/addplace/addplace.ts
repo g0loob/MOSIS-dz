@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import {ImagePicker, ImagePickerOptions} from "@ionic-native/image-picker";
 
 /**
  * Generated class for the Addplace page.
@@ -22,7 +23,8 @@ export class AddPlacePage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private camera: Camera) {
+              private camera: Camera,
+              private imagePicker: ImagePicker) {
   }
 
   ionViewDidLoad() {
@@ -44,7 +46,18 @@ export class AddPlacePage {
     };
 
     this.camera.getPicture(options)
-      .then(imgUrl => this.place.image = imgUrl);;
+      .then(imgUrl => this.place.image = imgUrl);
+  }
+
+  pickPicture() {
+    let options: ImagePickerOptions = {
+      maximumImagesCount: 1
+    };
+    this.imagePicker.getPictures(options)
+      .then((images) => {
+        this.place.image = images[0]; // first & only image
+      })
+      .catch(e => console.log("error: " + e));
   }
 
   addPlace() {

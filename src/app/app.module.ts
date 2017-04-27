@@ -15,6 +15,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { AboutPage } from "../pages/about/about";
 import { PopoverPage } from "../pages/popover/popover";
 import { AddPlacePage } from "../pages/addplace/addplace";
+import {ImagePicker} from "@ionic-native/image-picker";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { AddPlacePage } from "../pages/addplace/addplace";
     GoogleMaps,
     Facebook,
     GeolocationService,
-    Camera
+    Camera,
+    ImagePicker
   ]
 })
 export class AppModule {}
