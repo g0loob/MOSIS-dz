@@ -48,7 +48,7 @@
       <ion-col>
         <ion-item>
           <ion-label floating>Email</ion-label>
-          <ion-input type="email" [(ngModel)]="userProfile.email"></ion-input>
+          <ion-input type="email" pattern="[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]{2,3}" [(ngModel)]="userProfile.email"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label floating>Birthday</ion-label>
@@ -60,7 +60,7 @@
       <ion-col>
         <ion-buttons end>
           <button ion-button color="dark" clear (click)="cancel()">Cancel</button>
-          <button ion-button color="secondary" (click)="canEdit = false">Update</button>
+          <button ion-button color="secondary" (click)="checkEmail()">Update</button>
         </ion-buttons>
       </ion-col>
     </ion-row>
@@ -68,7 +68,7 @@
       <ion-col>
           <h4>Friends:</h4>
           <ion-list>
-            <ion-item *ngFor="let friend of userProfile.friends" (click)="callOnMe()">
+            <ion-item *ngFor="let friend of userProfile.friends">
               <ion-avatar item-left>
                 <img src="{{ friend.profile_photo }}">
               </ion-avatar>
