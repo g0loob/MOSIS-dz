@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AlertController, NavController, NavParams, PopoverController} from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import {PopoverPage} from "../popover/popover";
+import { Storage } from "@ionic/storage";
 
 export interface User {
   id: string,
@@ -36,11 +37,16 @@ export class ProfilePage {
               public navParams: NavParams,
               public popoverCtrl: PopoverController,
               public alertCtrl: AlertController,
-              private fb: Facebook) {
+              private fb: Facebook,
+              private storage: Storage) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Profile');
+
+    this.storage.get("email").then(value => this.userProfile.email = value || '');
+    this.storage.get("birthday").then(value => this.userProfile.birthday = value || '');
+
     this.fbSilentLogin();
   }
 
@@ -55,7 +61,7 @@ export class ProfilePage {
   setUserData(data: any) {
     this.userProfile.id = data.authResponse.userID;
     this.userProfile.access_token = data.authResponse.accessToken;
-
+    this.storage.set("userId", this.userProfile.id);
     // load user 'friends'
     this.getUserData();
 
@@ -104,6 +110,9 @@ export class ProfilePage {
     let regexp = new RegExp('^[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-z]{2,3}$');
     if (this.userProfile.email == '' || regexp.test(this.userProfile.email)) {
       this.canEdit = false;
+
+      this.storage.set("email", this.userProfile.email);
+      this.storage.set("birthday", this.userProfile.birthday);
     }
     else {
       let alert = this.alertCtrl.create({

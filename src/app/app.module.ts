@@ -10,6 +10,7 @@ import { Camera } from '@ionic-native/camera';
 import {ImagePicker} from "@ionic-native/image-picker";
 import {IndexedDBService} from "../providers/indexed-db-service";
 import {PlaceService} from "../providers/place-service";
+import { Storage } from "@ionic/storage";
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -18,6 +19,9 @@ import { ProfilePage } from '../pages/profile/profile';
 import { AboutPage } from "../pages/about/about";
 import { PopoverPage } from "../pages/popover/popover";
 import { AddPlacePage } from "../pages/addplace/addplace";
+import {SQLite} from "@ionic-native/sqlite";
+
+export function provideStorage() { return new Storage(SQLite); }
 
 @NgModule({
   declarations: [
@@ -53,7 +57,8 @@ import { AddPlacePage } from "../pages/addplace/addplace";
     Camera,
     ImagePicker,
     IndexedDBService,
-    PlaceService
+    PlaceService,
+    {provide: Storage, useFactory: provideStorage }
   ]
 })
 export class AppModule {}

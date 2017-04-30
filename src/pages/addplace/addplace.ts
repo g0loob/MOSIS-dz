@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import {ImagePicker, ImagePickerOptions} from "@ionic-native/image-picker";
 import {Place, PlaceService} from "../../providers/place-service";
+import { Storage } from "@ionic/storage";
 
 /**
  * Generated class for the Addplace page.
@@ -25,14 +26,15 @@ export class AddPlacePage {
     },
     beerCnt: 0,
     coffeeCnt: 0,
-    userId: '2'
+    userId: ''
   };
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private camera: Camera,
               private imagePicker: ImagePicker,
-              private placeService: PlaceService) {
+              private placeService: PlaceService,
+              private storage: Storage) {
   }
 
   ionViewDidLoad() {
@@ -42,6 +44,8 @@ export class AddPlacePage {
       .map(s => s.trim());
     this.place.coordinates.lat = Number(pos[0]);
     this.place.coordinates.lng = Number(pos[1]);
+
+    this.storage.get("userId").then(value => this.place.userId = value);
   }
 
   takePicture() {
@@ -69,9 +73,8 @@ export class AddPlacePage {
   addPlace() {
     this.place.beerCnt = Number(this.place.beerCnt);
     this.place.coffeeCnt = Number(this.place.coffeeCnt);
-    alert(JSON.stringify(this.place));
-    // this.placeService.addNew(this.place);
-    // this.navCtrl.pop();
+    this.placeService.addNew(this.place);
+    this.navCtrl.pop();
   }
 
   cancel() {
