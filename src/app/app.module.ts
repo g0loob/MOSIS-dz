@@ -7,6 +7,9 @@ import { GoogleMaps } from '@ionic-native/google-maps';
 import { Facebook } from '@ionic-native/facebook';
 import { GeolocationService } from "../providers/geolocation-service";
 import { Camera } from '@ionic-native/camera';
+import {ImagePicker} from "@ionic-native/image-picker";
+import {IndexedDBService} from "../providers/indexed-db-service";
+import {PlaceService} from "../providers/place-service";
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -15,7 +18,6 @@ import { ProfilePage } from '../pages/profile/profile';
 import { AboutPage } from "../pages/about/about";
 import { PopoverPage } from "../pages/popover/popover";
 import { AddPlacePage } from "../pages/addplace/addplace";
-import {ImagePicker} from "@ionic-native/image-picker";
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import {ImagePicker} from "@ionic-native/image-picker";
     Facebook,
     GeolocationService,
     Camera,
-    ImagePicker
+    ImagePicker,
+    IndexedDBService,
+    PlaceService
   ]
 })
 export class AppModule {}

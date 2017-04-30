@@ -27,13 +27,13 @@
       <ion-col>
         <ion-item>
           <ion-label floating>Latitude</ion-label>
-          <ion-input type="number" [(ngModel)]="place.lat" readonly></ion-input>
+          <ion-input type="number" [(ngModel)]="place.coordinates.lat" readonly></ion-input>
         </ion-item>
       </ion-col>
       <ion-col>
         <ion-item>
           <ion-label floating>Longitude</ion-label>
-          <ion-input type="number" [(ngModel)]="place.lng" readonly></ion-input>
+          <ion-input type="number" [(ngModel)]="place.coordinates.lng" readonly></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -41,17 +41,17 @@
       <ion-col>
         <ion-item>
           <ion-label>Beer</ion-label>
-          <ion-checkbox color="secondary"></ion-checkbox>
+          <ion-checkbox color="secondary" [(ngModel)]="place.beerCnt"></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Coffee</ion-label>
-          <ion-checkbox color="secondary"></ion-checkbox>
+          <ion-checkbox color="secondary" [(ngModel)]="place.coffeeCnt"></ion-checkbox>
         </ion-item>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="place.image != ''">
+    <ion-row *ngIf="place.imgUrl != ''">
       <ion-col>
-        <img src="{{ place.image }}" alt="image">
+        <img src="{{ place.imgUrl }}" alt="image">
       </ion-col>
     </ion-row>
     <ion-row>
