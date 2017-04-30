@@ -3,12 +3,16 @@ import {AlertController, NavController, NavParams, PopoverController} from 'ioni
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import {PopoverPage} from "../popover/popover";
 
-/**
- * Generated class for the Profile page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+export interface User {
+  id: string,
+  email: string,
+  birthday: string,
+  access_token: string,
+  profile_photo: string,
+  name: string,
+  friends: any
+}
+
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',
@@ -16,7 +20,15 @@ import {PopoverPage} from "../popover/popover";
 export class ProfilePage {
   loggedIn: boolean = false;
   canEdit: boolean = false;
-  userProfile: any = {};
+  userProfile: User = {
+    id: '',
+    email: '',
+    birthday: '',
+    access_token: '',
+    profile_photo: '',
+    name: '',
+    friends: []
+  };
   emailBeforeEdit: string = '';
   birthdayBeforeEdit: string = '';
 
@@ -41,8 +53,9 @@ export class ProfilePage {
   }
 
   setUserData(data: any) {
-    this.userProfile["id"] = data.authResponse.userID;
-    this.userProfile["access_token"] = data.authResponse.accessToken;
+    this.userProfile.id = data.authResponse.userID;
+    this.userProfile.access_token = data.authResponse.accessToken;
+
     // load user 'friends'
     this.getUserData();
 
@@ -62,10 +75,10 @@ export class ProfilePage {
   getUserData() {
     this.fb.api('/' + this.userProfile.id + '?fields = name', []).then((data) => {
       //Get the user data
-      this.userProfile['name'] = data.name;
+      this.userProfile.name = data.name;
       //Get the user profile picture and save in user object
       this.fb.api('/' + this.userProfile.id + '/picture?height=150&width=150&redirect=false', []).then((data) => {
-        this.userProfile['profile_photo'] = data.data.url;
+        this.userProfile.profile_photo = data.data.url;
       });
     });
   }
@@ -108,5 +121,4 @@ export class ProfilePage {
       ev: myEvent
     });
   }
-
 }
