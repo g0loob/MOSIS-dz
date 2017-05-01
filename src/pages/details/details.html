@@ -19,6 +19,22 @@
 
 
 <ion-content padding>
-  <p>{{ markerOptions?.title }}</p>
-  <p>{{ markerOptions?.position }}</p>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h3>{{ place?.name }}</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h5>Beer counter: {{ place?.beerCnt }}</h5>
+        <h5>Coffee counter: {{ place?.coffeeCnt }}</h5>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <img src="{{ place?.imgUrl }}" alt="image">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

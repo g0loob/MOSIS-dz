@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {NavController, NavParams, PopoverController} from 'ionic-angular';
-import { MarkerOptions } from '@ionic-native/google-maps'
 import {PopoverPage} from "../popover/popover";
+import {Place, PlaceService} from "../../providers/place-service";
 
 /**
  * Generated class for the Details page.
@@ -14,16 +14,18 @@ import {PopoverPage} from "../popover/popover";
   templateUrl: 'details.html',
 })
 export class DetailsPage {
-  markerOptions: MarkerOptions;
+  place: Place;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public popoverCtrl: PopoverController) {
+              public popoverCtrl: PopoverController,
+              private placeService: PlaceService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Details');
-    this.markerOptions = this.navParams.get('markerOptions');
+    let id = 1;//this.navParams.get('placeId');
+    this.place = this.placeService.getPlaceById(id);
   }
 
   more(myEvent) {
