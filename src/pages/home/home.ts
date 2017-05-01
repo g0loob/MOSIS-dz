@@ -14,6 +14,8 @@ import { ProfilePage } from '../profile/profile';
 import { GeolocationService } from "../../providers/geolocation-service";
 import { PopoverPage } from "../popover/popover";
 import {AddPlacePage} from "../addplace/addplace";
+import { Storage } from "@ionic/storage";
+import {Place, PlaceService} from "../../providers/place-service";
 
 @Component({
   selector: 'page-home',
@@ -23,16 +25,20 @@ export class HomePage {
   map: GoogleMap;
   myLastLocation: LatLng;
   markers: MarkerOptions[] = [];
+  places: Place[];
+  userId: string;
 
   constructor(public navCtrl: NavController,
+              public popoverCtrl: PopoverController,
               private googleMaps: GoogleMaps,
               private geolocationService: GeolocationService,
-              public popoverCtrl: PopoverController) {
-
+              private placeService: PlaceService,
+              private storage: Storage) {
   }
   // Load map only after view is initialized
   ngAfterViewInit() {
     this.loadMap();
+    this.storage.get("userId").then(val => this.userId = val);
   }
 
   loadMap() {
@@ -43,68 +49,62 @@ export class HomePage {
 
     // listen to MAP_READY event
     // You must wait for this event to fire before adding something to the map or modifying it in anyway
-    this.map.one(GoogleMapsEvent.MAP_READY).then(() => this.addMarker());
+    this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
+      this.moveCameraToMyLocation();
+      this.addMarkersOnMap();
+    });
   }
 
-  addMarker() {
-    // create LatLng object
-    let ionic: LatLng = new LatLng(43.0741904,-89.3809802);
-
-    // create CameraPosition
-    let position: AnimateCameraOptions = {
-      target: ionic,
-      zoom: 18,
-      tilt: 30,
-      duration: 2000
-    };
-
-    // move the map's camera to position
-    this.map.animateCamera(position);
-
-    // create new marker
-    let markerOptions: MarkerOptions = {
-      position: ionic,
-      title: 'Ionic'
-    };
-    markerOptions.infoClick = () => { this.showDetails(markerOptions); }
-
-    let markerOptions2: MarkerOptions = {
-      position: new LatLng(43.074, -89.380),
-      title: 'Moj pin',
-      icon: '#0000FF'
-    };
-    markerOptions2.infoClick = () => { this.showDetails(markerOptions2); }
-
-    this.markers.push(markerOptions);
-    this.markers.push(markerOptions2);
-
-    this.addMarkerOnMap(markerOptions);
-    this.addMarkerOnMap(markerOptions2);
+  moveCameraToMyLocation() {
+    this.geolocationService.getCurrentPosition().then(position => {
+      let cameraPosition: AnimateCameraOptions = {
+        target: new LatLng(position.coords.latitude, position.coords.longitude),
+        zoom: 15,
+        duration: 2000
+      };
+      this.map.animateCamera(cameraPosition);
+    });
   }
 
-  addMarkerOnMap(markerOptions: MarkerOptions) {
-    this.map.addMarker(markerOptions)
-      .then((marker: Marker) => {
-        // marker.showInfoWindow();
-        //this.addEventListenerForMarker(marker, markerOptions);
-      });
+  addMarkersOnMap() {
+    // this.placeService.places$
+    //   .subscribe(places => {
+    //     alert("addMarkersOnMap: " + places);
+    //     places.forEach(place => {
+    //       let markerOptions: MarkerOptions = {
+    //         position: new LatLng(place.coordinates.lat, place.coordinates.lng),
+    //         title: place.name + '\nBeer count: ' + place.beerCnt + '\nCoffee count: ' + place.coffeeCnt,
+    //         icon: place.userId == this.userId ? "#0000FF" : "#FF0000"
+    //       };
+    //       markerOptions.infoClick = () => this.showDetails(place.id);
+    //       this.map.addMarker(markerOptions).then((marker: Marker) => {});
+    //       this.markers.push(markerOptions);
+    //     })
+    //   });
+    for (let place of this.places) {
+      let markerOptions: MarkerOptions = {
+        position: new LatLng(place.coordinates.lat, place.coordinates.lng),
+        title: place.name + '\nBeer count: ' + place.beerCnt + '\nCoffee count: ' + place.coffeeCnt,
+        icon: place.userId == this.userId ? "#0000FF" : "#FF0000"
+      };
+      markerOptions.infoClick = () => this.showDetails(place.id);
+      this.addMarker(markerOptions);
+      this.markers.push(markerOptions);
+    }
   }
 
-  addEventListenerForMarker(marker: Marker, markerOptions: MarkerOptions) {
-    marker.addEventListener(GoogleMapsEvent.MARKER_CLICK)
-      .subscribe(e => { this.showDetails(markerOptions); });
+  addMarker(markerOptions: MarkerOptions) {
+    this.map.addMarker(markerOptions).then((marker: Marker) => {});
   }
 
-  showDetails(data: MarkerOptions) {
+  showDetails(placeId: number) {
     this.navCtrl.push(DetailsPage, {
-      'markerOptions': data
+      'placeId': placeId
     })
   }
 
   locateMe() {
     this.geolocationService.getCurrentPosition().then((position) => {
-      // position.coords.latitude
-      // position.coords.longitude
       this.removeMyLastLocationMarker();
       this.myLastLocation = new LatLng(position.coords.latitude, position.coords.longitude);
       let cameraPosition: AnimateCameraOptions = {
@@ -117,18 +117,15 @@ export class HomePage {
         // icon: 'https://www.easylocator.net/images/markers/blue_dot_circle_v2.png'// NJAMB'https://cdn0.iconfinder.com/data/icons/user-icons-4/100/user-17-256.png'
         icon: 'http://blog.ionic.io/wp-content/uploads/2015/05/cropped-logo-32x32.png'
       };
-      this.addMarkerOnMap(markerOptions);
+      this.addMarker(markerOptions);
       this.map.animateCamera(cameraPosition);
-    }).catch((error) => {
-      alert(error);
-      console.log('Error getting location', error);
-    });
+    }).catch(error => console.log('Error getting location', error))
   }
 
   removeMyLastLocationMarker() {
     this.map.clear();
     for (let marker of this.markers) {
-      this.addMarkerOnMap(marker);
+      this.addMarker(marker);
     }
   }
 
