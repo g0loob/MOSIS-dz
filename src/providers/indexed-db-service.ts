@@ -20,11 +20,11 @@ export class IndexedDBService {
   private dummyData: Place[] = [
     {
       id: 1,
-      name: 'A',
-      imgUrl: 'as',
+      name: 'Tesla',
+      imgUrl: 'http://bit.ly/2oXBQGU',
       coordinates: {
-        lat: 21,
-        lng: 23,
+        lat: 43.3177171,
+        lng: 21.8962393,
       },
       beerCnt: 1,
       coffeeCnt: 2,
@@ -32,38 +32,38 @@ export class IndexedDBService {
     },
     {
       id: 2,
-      name: 'B',
-      imgUrl: 'asd',
+      name: 'Tramvaj',
+      imgUrl: 'http://bit.ly/2iLfhUe',
       coordinates: {
-        lat: 21,
-        lng: 23,
+        lat: 43.3198691,
+        lng: 21.8951954,
       },
       beerCnt: 1,
-      coffeeCnt: 2,
+      coffeeCnt: 5,
       userId: '1'
     },
     {
       id: 3,
-      name: 'C',
-      imgUrl: 'qwe',
+      name: 'Beer book',
+      imgUrl: 'http://bit.ly/2qkFvDo',
       coordinates: {
-        lat: 21,
-        lng: 23,
+        lat: 43.3178162,
+        lng: 21.9034455,
       },
-      beerCnt: 1,
-      coffeeCnt: 2,
+      beerCnt: 10,
+      coffeeCnt: 0,
       userId: '3'
     },
     {
       id: 4,
-      name: 'D',
-      imgUrl: 'asz',
+      name: 'Ministarstvo',
+      imgUrl: 'http://bit.ly/2p0oPgz',
       coordinates: {
-        lat: 21,
-        lng: 23,
+        lat: 43.320153,
+        lng: 21.9015618,
       },
-      beerCnt: 1,
-      coffeeCnt: 2,
+      beerCnt: 25,
+      coffeeCnt: 0,
       userId: '4'
     }
   ];
