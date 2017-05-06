@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import {NavController, NavParams, PopoverController} from 'ionic-angular';
 import {PopoverPage} from "../popover/popover";
-import {Place, PlaceService} from "../../providers/place-service";
+import {Place} from "../../providers/place-service";
+import {SqliteService} from "../../providers/sqlite-service";
 
 /**
  * Generated class for the Details page.
@@ -19,13 +20,13 @@ export class DetailsPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public popoverCtrl: PopoverController,
-              private placeService: PlaceService) {
+              private sqliteService: SqliteService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Details');
     let id = 1;//this.navParams.get('placeId');
-    this.place = this.placeService.getPlaceById(id);
+    this.place = this.sqliteService.getPlaceById(id);
   }
 
   more(myEvent) {

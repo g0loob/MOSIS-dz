@@ -8,8 +8,8 @@ import { Facebook } from '@ionic-native/facebook';
 import { GeolocationService } from "../providers/geolocation-service";
 import { Camera } from '@ionic-native/camera';
 import {ImagePicker} from "@ionic-native/image-picker";
-import {IndexedDBService} from "../providers/indexed-db-service";
-import {PlaceService} from "../providers/place-service";
+// import {IndexedDBService} from "../providers/sqlite-service";
+// import {PlaceService} from "../providers/place-service";
 import { Storage } from "@ionic/storage";
 
 import { MyApp } from './app.component';
@@ -20,6 +20,7 @@ import { AboutPage } from "../pages/about/about";
 import { PopoverPage } from "../pages/popover/popover";
 import { AddPlacePage } from "../pages/addplace/addplace";
 import {SQLite} from "@ionic-native/sqlite";
+import {SqliteService} from "../providers/sqlite-service";
 
 export function provideStorage() { return new Storage(SQLite); }
 
@@ -56,8 +57,8 @@ export function provideStorage() { return new Storage(SQLite); }
     GeolocationService,
     Camera,
     ImagePicker,
-    IndexedDBService,
-    PlaceService,
+    SqliteService,
+    // PlaceService,
     {provide: Storage, useFactory: provideStorage }
   ]
 })

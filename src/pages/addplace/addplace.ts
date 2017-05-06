@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import {ImagePicker, ImagePickerOptions} from "@ionic-native/image-picker";
-import {Place, PlaceService} from "../../providers/place-service";
+import {Place} from "../../providers/place-service";
 import { Storage } from "@ionic/storage";
+import {SqliteService} from "../../providers/sqlite-service";
 
 /**
  * Generated class for the Addplace page.
@@ -33,7 +34,7 @@ export class AddPlacePage {
               public navParams: NavParams,
               private camera: Camera,
               private imagePicker: ImagePicker,
-              private placeService: PlaceService,
+              private sqliteService: SqliteService,
               private storage: Storage) {
   }
 
@@ -73,7 +74,7 @@ export class AddPlacePage {
   addPlace() {
     this.place.beerCnt = Number(this.place.beerCnt);
     this.place.coffeeCnt = Number(this.place.coffeeCnt);
-    this.placeService.addNew(this.place);
+    this.sqliteService.addPlace(this.place);
     this.navCtrl.pop();
   }
 

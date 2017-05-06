@@ -15,7 +15,8 @@ import { GeolocationService } from "../../providers/geolocation-service";
 import { PopoverPage } from "../popover/popover";
 import {AddPlacePage} from "../addplace/addplace";
 import { Storage } from "@ionic/storage";
-import {Place, PlaceService} from "../../providers/place-service";
+import {Place} from "../../providers/place-service";
+import {SqliteService} from "../../providers/sqlite-service";
 
 @Component({
   selector: 'page-home',
@@ -32,11 +33,25 @@ export class HomePage {
               public popoverCtrl: PopoverController,
               private googleMaps: GoogleMaps,
               private geolocationService: GeolocationService,
-              private placeService: PlaceService,
+              private sqliteService: SqliteService,
               private storage: Storage) {
+    // this.sqliteService.addPlace({
+    //   id: 1,
+    //   name: 'Tesla',
+    //   imgUrl: 'http://bit.ly/2oXBQGU',
+    //   coordinates: {
+    //     lat: 43.3177171,
+    //     lng: 21.8962393,
+    //   },
+    //   beerCnt: 1,
+    //   coffeeCnt: 2,
+    //   userId: '1'
+    // });
+
   }
   // Load map only after view is initialized
   ngAfterViewInit() {
+    this.places = this.sqliteService.getPlaces();
     this.loadMap();
     this.storage.get("userId").then(val => this.userId = val);
   }
