@@ -3,6 +3,7 @@ import {AlertController, NavController, NavParams, PopoverController} from 'ioni
 import {PopoverPage} from "../popover/popover";
 import {Place} from "../../providers/place-service";
 import {SqliteService} from "../../providers/sqlite-service";
+import {Storage} from "@ionic/storage";
 
 /**
  * Generated class for the Details page.
@@ -28,11 +29,11 @@ export class DetailsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Details');
+    this.storage.get('userId').then(val => this.userId = val);
     let id = this.navParams.get('placeId');
     this.sqliteService.getPlaceById(id).subscribe(place => {
       this.place = place;
     });
-    // this.storage.get("userId").then(val => this.userId = val);
   }
 
   more(myEvent) {
@@ -42,34 +43,34 @@ export class DetailsPage {
     });
   }
 
-  // checkin() {
-  //   let prompt = this.alertCtrl.create();
-  //   prompt.setTitle('Check in');
-  //
-  //   prompt.addInput({
-  //     type: 'checkbox',
-  //     label: 'Beer',
-  //     value: 'b',
-  //   });
-  //
-  //   prompt.addInput({
-  //     type: 'checkbox',
-  //     label: 'Coffee',
-  //     value: 'c'
-  //   });
-  //
-  //   prompt.addButton('Cancel');
-  //   prompt.addButton({
-  //     text: 'OK',
-  //     handler: data => {
-  //       for (let d of data) {
-  //         if (d == 'b') this.place.beerCnt++;
-  //         if (d == 'c') this.place.coffeeCnt++;
-  //       }
-  //       this.sqliteService.updatePlace(this.place);
-  //     }
-  //   });
-  //   prompt.present();
-  // }
+  checkin() {
+    let prompt = this.alertCtrl.create();
+    prompt.setTitle('Check in');
+
+    prompt.addInput({
+      type: 'checkbox',
+      label: 'Beer',
+      value: 'b',
+    });
+
+    prompt.addInput({
+      type: 'checkbox',
+      label: 'Coffee',
+      value: 'c'
+    });
+
+    prompt.addButton('Cancel');
+    prompt.addButton({
+      text: 'OK',
+      handler: data => {
+        for (let d of data) {
+          if (d == 'b') this.place.beerCnt++;
+          if (d == 'c') this.place.coffeeCnt++;
+        }
+        this.sqliteService.updatePlace(this.place);
+      }
+    });
+    prompt.present();
+  }
 
 }
