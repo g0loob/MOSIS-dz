@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavController, NavParams, PopoverController} from 'ionic-angular';
+import {AlertController, NavController, NavParams, PopoverController} from 'ionic-angular';
 import {PopoverPage} from "../popover/popover";
 import {Place} from "../../providers/place-service";
 import {SqliteService} from "../../providers/sqlite-service";
@@ -16,17 +16,23 @@ import {SqliteService} from "../../providers/sqlite-service";
 })
 export class DetailsPage {
   place: Place;
+  userId: string;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public popoverCtrl: PopoverController,
-              private sqliteService: SqliteService) {
+              private sqliteService: SqliteService,
+              private alertCtrl: AlertController,
+              private storage: Storage) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Details');
-    let id = 1;//this.navParams.get('placeId');
-    this.place = this.sqliteService.getPlaceById(id);
+    let id = this.navParams.get('placeId');
+    this.sqliteService.getPlaceById(id).subscribe(place => {
+      this.place = place;
+    });
+    // this.storage.get("userId").then(val => this.userId = val);
   }
 
   more(myEvent) {
@@ -35,5 +41,35 @@ export class DetailsPage {
       ev: myEvent
     });
   }
+
+  // checkin() {
+  //   let prompt = this.alertCtrl.create();
+  //   prompt.setTitle('Check in');
+  //
+  //   prompt.addInput({
+  //     type: 'checkbox',
+  //     label: 'Beer',
+  //     value: 'b',
+  //   });
+  //
+  //   prompt.addInput({
+  //     type: 'checkbox',
+  //     label: 'Coffee',
+  //     value: 'c'
+  //   });
+  //
+  //   prompt.addButton('Cancel');
+  //   prompt.addButton({
+  //     text: 'OK',
+  //     handler: data => {
+  //       for (let d of data) {
+  //         if (d == 'b') this.place.beerCnt++;
+  //         if (d == 'c') this.place.coffeeCnt++;
+  //       }
+  //       this.sqliteService.updatePlace(this.place);
+  //     }
+  //   });
+  //   prompt.present();
+  // }
 
 }

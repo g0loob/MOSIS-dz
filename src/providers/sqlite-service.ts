@@ -91,28 +91,27 @@ export class SqliteService {
     }
   }
 
-  public getPlaces(): Place[] {
-    // let placesSubject: Subject<Place[]> = new Subject();
-    let places: Place[] = [];
+  public getPlaces(): Observable<Place[]> {
+    let placesSubject: Subject<Place[]> = new Subject();
     if (this.db) {
       this.db.executeSql(`select * from Places`, [])
         .then((result) => {
           // let places: Place[] = [];
           let rowCount = result.rows.length, i;
+          let places: Place[] = [];
           for (i = 0; i < rowCount; i++) {
             let dbPlace: DBPlace = result.rows.item(i);
             places.push(this.transformPlace(dbPlace));
           }
-          // placesSubject.next(places);
-          // placesSubject.complete();
+          placesSubject.next(places);
+          placesSubject.complete();
         })
         .catch(this.errorHandler);
     }
     else {
-      throw `Database doesn't exist`;
+      alert(`Database doesn't exist`);
     }
-    alert(JSON.stringify(places));
-    return places;//Subject;
+    return placesSubject;
   }
 
   public getUsers(): Observable<DBUser[]> {
@@ -132,24 +131,27 @@ export class SqliteService {
         .catch(this.errorHandler);
     }
     else {
-      throw `Database doesn't exist`;
+      alert(`Database doesn't exist`);
     }
     return usersSubject;
   }
 
-  public getPlaceById(id: number): Place {
+  public getPlaceById(id: number): Observable<Place> {
+    let placeSubject: Subject<Place> = new Subject();
     let place: Place;
     if (this.db) {
-      this.db.executeSql(`select * from Places where id=${id}`, [])
+      this.db.executeSql(`select * from Places where id=${id};`, [])
         .then((result) => {
-          place = result.rows.item(0);
+          place = this.transformPlace(result.rows.item(0));
+          placeSubject.next(place);
+          placeSubject.complete();
         })
         .catch(this.errorHandler);
     }
     else {
-      throw `db not exists`;
+      alert(`db not exists`);
     }
-    return place;
+    return placeSubject;
   }
 
   public getUserById(id: number): DBUser {
@@ -171,8 +173,8 @@ export class SqliteService {
     if (this.db) {
       this.db.executeSql(
         `insert into Places(name, imgurl, lat, lng, beercnt, coffeecnt, userid) 
-         values (${place.name},${place.imgUrl},${place.coordinates.lat},
-         ${place.coordinates.lng},${place.beerCnt},${place.coffeeCnt},${place.userId});`,
+         values ("${place.name}","${place.imgUrl}",${place.coordinates.lat},
+         ${place.coordinates.lng},${place.beerCnt},${place.coffeeCnt},"${place.userId}");`,
         []
       )
         .then((result) => console.log(result))
@@ -187,7 +189,7 @@ export class SqliteService {
     if (this.db) {
       this.db.executeSql(
         `insert into Users(name, img, email, birthday) 
-         values (${user.name},${user.img},${user.email},${user.birthday});`,
+         values ("${user.name}","${user.img}","${user.email}","${user.birthday}");`,
         []
       )
         .then((result) => console.log(result))
@@ -202,7 +204,7 @@ export class SqliteService {
     if (this.db) {
       this.db.executeSql(
         `update Places 
-         set name=${place.name}, imgurl=${place.imgUrl},
+         set name="${place.name}", imgurl="${place.imgUrl}",
          beercnt=${place.beerCnt}, coffeecnt=${place.coffeeCnt} 
          where id=${place.id};`,
         []

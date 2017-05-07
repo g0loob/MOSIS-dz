@@ -75,6 +75,7 @@ export class AddPlacePage {
     this.place.beerCnt = Number(this.place.beerCnt);
     this.place.coffeeCnt = Number(this.place.coffeeCnt);
     this.sqliteService.addPlace(this.place);
+
     this.navCtrl.pop();
   }
 
