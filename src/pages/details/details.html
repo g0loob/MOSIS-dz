@@ -39,5 +39,10 @@
         <img src="{{ place?.imgUrl }}" alt="image">
       </ion-col>
     </ion-row>
+    <ion-row *ngIf="user?.name">
+      <ion-col>
+        <h6>Added by: {{user?.name}}</h6>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>

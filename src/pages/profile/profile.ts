@@ -3,6 +3,7 @@ import {AlertController, NavController, NavParams, PopoverController} from 'ioni
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import {PopoverPage} from "../popover/popover";
 import { Storage } from "@ionic/storage";
+import {SqliteService} from "../../providers/sqlite-service";
 
 export interface User {
   id: string,
@@ -38,7 +39,8 @@ export class ProfilePage {
               public popoverCtrl: PopoverController,
               public alertCtrl: AlertController,
               private fb: Facebook,
-              private storage: Storage) {
+              private storage: Storage,
+              private sqliteService: SqliteService) {
   }
 
   ionViewDidLoad() {
@@ -62,7 +64,6 @@ export class ProfilePage {
     this.userProfile.id = data.authResponse.userID;
     this.userProfile.access_token = data.authResponse.accessToken;
     this.storage.set("userId", this.userProfile.id);
-    // load user 'friends'
     this.getUserData();
 
     this.loggedIn = true;
@@ -86,6 +87,9 @@ export class ProfilePage {
       this.fb.api('/' + this.userProfile.id + '/picture?height=150&width=150&redirect=false', []).then((data) => {
         this.userProfile.profile_photo = data.data.url;
       });
+    });
+    this.sqliteService.getUsers().subscribe(users => {
+      this.userProfile.friends = users;
     });
   }
 

@@ -35,32 +35,15 @@ export class HomePage {
               private geolocationService: GeolocationService,
               private sqliteService: SqliteService,
               private storage: Storage) {
-    // this.sqliteService.addPlace({
-    //   id: 1,
-    //   name: 'Tesla',
-    //   imgUrl: 'http://bit.ly/2oXBQGU',
-    //   coordinates: {
-    //     lat: 43.3177171,
-    //     lng: 21.8962393,
-    //   },
-    //   beerCnt: 1,
-    //   coffeeCnt: 2,
-    //   userId: '1'
-    // });
 
   }
   // Load map only after view is initialized
   ngAfterViewInit() {
-    //alert('0');
-    // this.places = this.sqliteService.getPlaces();
     this.loadMap();
-    //alert('1');
     this.storage.get("userId").then(val => this.userId = val);
-    //alert('2');
   }
 
   loadMap() {
-    //alert('3');
     // create a new map by passing HTMLElement
     let element: HTMLElement = document.getElementById('map');
 
@@ -86,20 +69,6 @@ export class HomePage {
   }
 
   addMarkersOnMap() {
-    // this.placeService.places$
-    //   .subscribe(places => {
-    //     alert("addMarkersOnMap: " + places);
-    //     places.forEach(place => {
-    //       let markerOptions: MarkerOptions = {
-    //         position: new LatLng(place.coordinates.lat, place.coordinates.lng),
-    //         title: place.name + '\nBeer count: ' + place.beerCnt + '\nCoffee count: ' + place.coffeeCnt,
-    //         icon: place.userId == this.userId ? "#0000FF" : "#FF0000"
-    //       };
-    //       markerOptions.infoClick = () => this.showDetails(place.id);
-    //       this.map.addMarker(markerOptions).then((marker: Marker) => {});
-    //       this.markers.push(markerOptions);
-    //     })
-    //   });
     this.sqliteService.getPlaces().subscribe(places => {
       this.places = places;
       for (let place of this.places) {

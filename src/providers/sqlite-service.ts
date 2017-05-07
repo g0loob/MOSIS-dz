@@ -17,7 +17,7 @@ interface DBPlace {
   userid: string;
 }
 
-interface DBUser {
+export interface DBUser {
   id: number;
   img: string;
   name: string;
@@ -154,19 +154,22 @@ export class SqliteService {
     return placeSubject;
   }
 
-  public getUserById(id: number): DBUser {
+  public getUserById(id: number): Observable<DBUser> {
+    let userSubject: Subject<DBUser> = new Subject();
     let user: DBUser;
     if (this.db) {
       this.db.executeSql(`select * from Users where id=${id}`, [])
         .then((result) => {
           user = result.rows.item(0);
+          userSubject.next(user);
+          userSubject.complete();
         })
         .catch(this.errorHandler);
     }
     else {
       throw `no db`;
     }
-    return user;
+    return userSubject;
   }
 
   public addPlace(place: Place): void {

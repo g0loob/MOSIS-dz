@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {AlertController, NavController, NavParams, PopoverController} from 'ionic-angular';
 import {PopoverPage} from "../popover/popover";
 import {Place} from "../../providers/place-service";
-import {SqliteService} from "../../providers/sqlite-service";
+import {DBUser, SqliteService} from "../../providers/sqlite-service";
 import {Storage} from "@ionic/storage";
 
 /**
@@ -18,6 +18,7 @@ import {Storage} from "@ionic/storage";
 export class DetailsPage {
   place: Place;
   userId: string;
+  user: DBUser;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -33,6 +34,9 @@ export class DetailsPage {
     let id = this.navParams.get('placeId');
     this.sqliteService.getPlaceById(id).subscribe(place => {
       this.place = place;
+      this.sqliteService.getUserById(Number(this.place.userId)).subscribe(user => {
+        this.user = user;
+      });
     });
   }
 
