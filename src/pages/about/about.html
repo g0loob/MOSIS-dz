@@ -10,9 +10,44 @@
     <ion-title>About</ion-title>
   </ion-navbar>
 
+  <link href='//fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content padding class="masters">
+  <div id="container">
+    <div id="canvas">
+      <canvas #logo width="128" height="128" id="logo">
+      </canvas>
+    </div>
+    <div id="about">
+      <div id="appName">
+        <h1>{{appName}}</h1>
+      </div>
+      <div id="text">
+        <i>{{appName}}</i> app is your social media where you
+        can share with your friends your favourite coffee shops
+        or your favourite taverns.
+        <br/>
+        <br/>
+        Find your location, check-in & see as your coffee or beer
+        counter goes up! You can also attach a photo you with your drink.
+        <br/>
+        <br/>
+        If that isn't enough get notified if you come close to one
+        of your friends' location and join them if you like.
+        <br/>
+        <br/>
+        For any needed support contact<br/>
+        <i>{{email}}</i>
+        <br/>
+        <br/>
+      </div>
+      <div id="editors">
+        {{golub}}<br/>
+        {{njamb}}<br/>
+        {{fax}}
+      </div>
+    </div>
+  </div>
 </ion-content>
